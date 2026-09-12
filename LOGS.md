@@ -19,6 +19,11 @@ _Status: in-progress (branch `gate-0-scaffold`)._
 - Diagnose: none yet; scaffold follows the exact V2 shape from
   `@opencode/plugin@2.0.2` docs + typings (unlike `opencode-voice@0.1.4`
   which imports `@opencode-ai/plugin`).
+- Diagnose 2 (not loaded in TUI, `/plugins` empty, no toast, no error):
+  entry not resolved at all (no UI error surfaced, unlike the V1-module
+  rejection which DID surface). Suspect: forward-slash absolute Windows
+  path `C:/...` not resolved by the CLI loader. Fix attempt: switch to
+  backslash-escaped `C:\\...` form. Awaiting user TUI retest.
 
 ## Gate 1 — Hotkey & commands
 
