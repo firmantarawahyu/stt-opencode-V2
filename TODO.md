@@ -2,7 +2,7 @@
 
 Legend: ⬜ open · 🟡 in-progress · 🟩 pass
 
-## Gate 0 — Scaffold & load ⬜
+## Gate 0 — Scaffold & load 🟡
 
 - [ ] `package.json` (exports `./tui`, dep `@opencode/plugin`), `src/tui.ts`
       minimal (setup toast), registered in global `cli.json` by local path
