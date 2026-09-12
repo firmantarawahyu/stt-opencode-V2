@@ -5,7 +5,10 @@
 ## Identity & loading
 
 - Plugin ID: `stt-opencode2`.
-- Local package in this workspace, referenced by path from global `cli.json`.
+- Local package in this workspace, registered in the global server config
+  (`config.json` `plugins`) via `file:///` URL. Per V2 docs, the CLI loads
+  the TUI component automatically from server-configured plugins; `cli.json`
+  is only for CLI-only plugins.
 - V2 module shape: `Plugin.define({ id, setup })` from `@opencode/plugin/tui`.
 - `package.json` exports `./tui`; dependency `@opencode/plugin` (V2 line).
 

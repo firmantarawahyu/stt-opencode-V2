@@ -28,6 +28,13 @@ _Status: in-progress (branch `gate-0-scaffold`)._
   entry at a guaranteed-nonexistent path. If a loader error surfaces, the
   loader reads `cli.json` and the issue is path resolution. If still
   silent, the TUI is not picking up `cli.json` at all.
+- Diagnose 4 (probe silent; dual TUI processes found and cleaned): root
+  cause found in V2 docs (`/v2/docs/cli/plugins`) — plugins exposing a TUI
+  component load AUTOMATICALLY from server config (`opencode.json(c)`), and
+  `cli.json` is only for CLI-only plugins. Our entry was on the wrong
+  route. Fix: `cli.json` plugins emptied; global `config.json` gets
+  `plugins: ["file:///C:/Users/wahyu/Downloads/STT-Opencode-Plugins"]`;
+  service restarted. `SPECS.md` corrected to the server-config route.
 
 ## Gate 1 — Hotkey & commands
 
