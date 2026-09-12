@@ -7,6 +7,7 @@ export default Plugin.define({
       title: "stt-opencode2",
       message: "Voice plugin loaded (Gate 0 scaffold).",
       variant: "success",
+      duration: 8000,
     });
   },
 });
