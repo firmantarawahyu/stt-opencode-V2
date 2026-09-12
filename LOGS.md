@@ -35,6 +35,14 @@ _Status: in-progress (branch `gate-0-scaffold`)._
   route. Fix: `cli.json` plugins emptied; global `config.json` gets
   `plugins: ["file:///C:/Users/wahyu/Downloads/STT-Opencode-Plugins"]`;
   service restarted. `SPECS.md` corrected to the server-config route.
+- Diagnose 5 (server `/api/plugin` lists builtins only; log shows NO
+  `loading plugin` line for our `file://` entry — vs npm entries and the
+  global discovery dir, both proven in this machine's log history):
+  `file://` config entries are silently ignored here. Fix: use the proven
+  route — symlink workspace into global discovery dir
+  (`~/.config/opencode/plugins/stt-opencode2 -> workspace`);
+  `file://` entries removed from `config.json`; `opencode.json` (created
+  earlier as a probe) deleted to keep a single route. `SPECS.md` corrected.
 
 ## Gate 1 — Hotkey & commands
 
