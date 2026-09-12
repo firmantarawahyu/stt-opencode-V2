@@ -1,0 +1,14 @@
+{
+  "name": "stt-opencode2",
+  "version": "0.0.0-alpha.0",
+  "type": "module",
+  "license": "MIT",
+  "description": "Speech-to-text TUI plugin for OpenCode V2 (Windows, Groq Whisper).",
+  "exports": {
+    ".": "./src/index.ts",
+    "./tui": "./src/tui.ts"
+  },
+  "dependencies": {
+    "@opencode/plugin": "2.0.2"
+  }
+}
