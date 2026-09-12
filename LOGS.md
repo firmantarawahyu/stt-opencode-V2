@@ -24,6 +24,10 @@ _Status: in-progress (branch `gate-0-scaffold`)._
   rejection which DID surface). Suspect: forward-slash absolute Windows
   path `C:/...` not resolved by the CLI loader. Fix attempt: switch to
   backslash-escaped `C:\\...` form. Awaiting user TUI retest.
+- Diagnose 3 (still silent after backslash form): probe experiment — point
+  entry at a guaranteed-nonexistent path. If a loader error surfaces, the
+  loader reads `cli.json` and the issue is path resolution. If still
+  silent, the TUI is not picking up `cli.json` at all.
 
 ## Gate 1 — Hotkey & commands
 
