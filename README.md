@@ -2,13 +2,13 @@
 
 Speech-to-text for the OpenCode TUI on Windows.
 
-You press a hotkey to record, press it again to transcribe. The text
-lands in a dialog and in your clipboard. You paste it into the
-composer yourself. You send everything yourself.
+Press a hotkey to record, press it again to transcribe. The text
+lands in a dialog and in your clipboard. Paste it into the
+composer yourself and send everything yourself.
 
 ## Install
 
-You need Windows, a mic, SoX, ffmpeg as backup, and OpenCode v2.x.
+What you need is a mic, SoX, ffmpeg as backup, and OpenCode v2.x.
 The plugin ships inside this repo, so you clone it and open the TUI
 from the repo root.
 
@@ -35,7 +35,7 @@ symlinked folders, so a symlink buys you nothing.
 
 ## API key
 
-Groq transcribes your audio. Its free tier needs a key. You keep that
+Groq transcribes your audio. Its free tier needs a key. Keep that
 key in your environment, in no file, ever.
 
 1. Sign up at https://console.groq.com/keys and create a key. Copy
@@ -73,6 +73,18 @@ Each run follows one path: you record, you see a transcribing toast,
 the full text pops in a dialog (sitting in your clipboard),
 you confirm, you get a success toast with the char count. You then
 paste where you want it.
+
+### Languages
+
+The menu ships three choices: `auto`, `id`, `en`. The plugin tunes
+for Indonesian and English specifically.
+
+You speak another language, pick `auto`. Whisper detects many
+languages on its own, so `auto` follows you without setup. You need
+to force a specific third language today, the code holds no slot for
+it. You add its ISO code to `VoiceLang` and the dialog options in
+`tui.ts`, or you wait for Beta to widen the list. Until then, `auto`
+covers you.
 
 ## Troubleshooting
 
