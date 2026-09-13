@@ -1,80 +1,98 @@
 # stt-opencode2 (Alpha)
 
-Speech-to-text TUI plugin for OpenCode V2 (Windows).
+Speech-to-text for the OpenCode TUI on Windows.
 
-Voice input via Groq Whisper: press hotkey to record, press again to
-transcribe — result shown in a dialog and auto-copied to clipboard.
-Paste manually into the composer (no auto-submit in Alpha, by design).
+You press a hotkey to record, press it again to transcribe. The text
+lands in a dialog and in your clipboard. You paste it into the
+composer yourself. You send everything yourself.
 
-See `SPECS.md` for scope, `ROADMAP.md` for planning, `TODO.md` for gates.
+## Install
 
-## Documentation
+You need Windows, a mic, SoX, ffmpeg as backup, and OpenCode v2.x.
+The plugin ships inside this repo, so you clone it and open the TUI
+from the repo root.
 
-- `docs/ARCHITECTURE.md` — system design, components, locked decisions.
-- `docs/DEVELOPER_GUIDE.md` — setup, checks, live-test protocol.
-- `docs/CONTRIBUTING.md` — scope lock, PR requirements.
-- `CHANGELOG.md` — release notes per tag.
+1. Clone and enter the repo:
 
-## License
+   ```powershell
+   git clone <repo-url>
+   cd STT-Opencode-Plugins
+   ```
 
-MIT — see `LICENSE`.
+2. Launch the TUI:
 
-## Install (workspace-only)
+   ```powershell
+   opencode
+   ```
 
-The plugin lives in `.opencode/plugins/stt-opencode2/` of this repo and
-loads per-location. Open the TUI with cwd = this workspace:
+3. Look for the `Voice plugin loaded` toast. You see it, the plugin
+   is live. You run `/voice` and get an answer, your hotkey works.
 
-```
-cd C:\Users\wahyu\Downloads\STT-Opencode-Plugins
-opencode
-```
-
-No global install in Alpha (do not symlink it into
-`~/.config/opencode/plugins` — the scanner ignores symlinked dirs).
-
-Requirements: Windows, SoX (`sox`) with a working mic (primary),
-ffmpeg as fallback, OpenCode v2.x.
+The plugin loads per folder. You open the TUI from another folder and
+it stays unloaded. Alpha stays workspace-only on purpose. Do not
+symlink it into `~/.config/opencode/plugins`. The scanner skips
+symlinked folders, so a symlink buys you nothing.
 
 ## API key
 
-Groq free tier only. Key comes exclusively from the environment —
-never written into any file.
+Groq transcribes your audio. Its free tier needs a key. You keep that
+key in your environment, in no file, ever.
 
-One-time persistent setup (new terminal afterwards):
+1. Sign up at https://console.groq.com/keys and create a key. Copy
+   the `gsk_...` value.
+2. Save it to your account once:
 
-```
-setx GROQ_API_KEY "gsk_..."
-```
+   ```powershell
+   setx GROQ_API_KEY "gsk_..."
+   ```
 
-Check without printing the key:
+3. Close that terminal and open a new one. `setx` skips the shell you
+   run it in, so the old window misses the new value.
+4. Launch `opencode` from the new terminal.
+5. Confirm without printing the key:
 
-```
-$env:GROQ_API_KEY.Length
-[Environment]::GetEnvironmentVariable('GROQ_API_KEY','User').Length
-```
+   ```powershell
+   $env:GROQ_API_KEY.Length
+   ```
 
-The TUI inherits the key from the process that launches it, so start
-`opencode` from a terminal that has it.
+   A positive number means you set it. Empty output means you missed
+   step 2 or 3.
+
+Launch the TUI from a shell that holds the key. You launch from a
+shell without it, transcription fails with a missing-key toast.
 
 ## Usage
 
-- `<leader>v` (`ctrl+x` then `V`): start/stop recording (auto-stop 120s).
-- `/voice`: same toggle via slash command / palette.
-- `/voice-lang`: pick transcription language (`auto`/`id`/`en`),
-  persisted across TUI restarts. The recording toast shows the active
-  one (`[lang id]`).
+- `<leader>v` (`ctrl+x`, then `V`): start recording. Press again to
+  stop. Recording stops on its own at 120 seconds.
+- `/voice`: the same toggle through the slash menu or palette.
+- `/voice-lang`: pick `auto`, `id`, or `en`. Your choice survives TUI
+  restarts. The recording toast names the active one (`[lang id]`).
 
-Flow: record → transcribing toast → dialog with full text (already in
-clipboard) → confirm → success toast with char count.
+Each run follows one path: you record, you see a transcribing toast,
+the full text pops in a dialog (sitting in your clipboard),
+you confirm, you get a success toast with the char count. You then
+paste where you want it.
 
 ## Troubleshooting
 
-| Symptom | Cause / fix |
+| What you see | What you do |
 |---|---|
-| `GROQ_API_KEY is not set` | Env missing in the TUI process; `setx` + new terminal, relaunch. |
-| `Groq rejected the key (401)` | Wrong/revoked key; check `GROQ_API_KEY`. |
-| `rate limit hit (429)` | Groq free-tier limit; wait a minute, retry. |
-| `Recording too large (413)` | Keep recordings under 120s (auto-stop handles this). |
-| `Cannot record: sox exited early` | Mic/device issue; SoX uses `waveaudio 0`. Check mic in Settings. |
-| Transcript dialog shows but prompt stays empty | By design (Alpha): copy/paste manually, no auto-submit. |
-| `Copy failed` warning | Clipboard fallback failed; retype from the dialog text. |
+| `GROQ_API_KEY is not set` | Your TUI shell lacks the key. Run `setx`, open a fresh terminal, relaunch. |
+| `Groq rejected the key (401)` | Your key is wrong or revoked. Generate a new one. |
+| `rate limit hit (429)` | You hit the free-tier limit. Wait a minute, retry. |
+| `Recording too large (413)` | Keep takes under 120s. Auto-stop guards this for you. |
+| `Cannot record: sox exited early` | SoX finds no mic. SoX here uses `waveaudio 0`. Check your mic in Windows Settings. |
+| Dialog shows text, prompt stays empty | Alpha works this way. Paste it yourself. |
+| `Copy failed` warning | The clipboard fallback failed too. Retype from the dialog text. |
+
+## Documentation
+
+- `docs/ARCHITECTURE.md`: design, components, locked decisions.
+- `docs/DEVELOPER_GUIDE.md`: setup, checks, live-test protocol.
+- `docs/CONTRIBUTING.md`: scope lock, PR requirements.
+- `SPECS.md`: locked scope. `CHANGELOG.md`: notes per tag.
+
+## License
+
+MIT. Read `LICENSE`.
