@@ -48,7 +48,9 @@ work; palette lists both, no conflicts. Merged to `master`._
 
 ## Gate 2 — Recorder
 
-_Status: in-progress (branch `gate-2-recorder`)._
+_Status: PASS (2026-09-13). Sign-off: manual stop + valid WAV + auto-stop
+all proven by execution; ffmpeg fallback code-reviewed only. Merged to
+`master`._
 
 - Build: `lib/recorder.ts` (SoX primary `sox -d`, ffmpeg DirectShow
   fallback with device enumeration, graceful stop, 120s auto-stop timer)

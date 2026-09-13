@@ -13,7 +13,13 @@ Legend: ⬜ open · 🟡 in-progress · 🟩 pass
 - [x] `<leader>v` toggle stub (toast), `/voice` + `/voice-lang` stubs, palette entries
 - [x] No provider error (app-slot fix); user-confirmed, no builtin conflicts
 
-## Gate 2 — Recorder 🟡
+## Gate 2 — Recorder 🟩
+
+- [x] SoX records valid WAV to approved temp dir; manual stop works
+- [x] Auto-stop proven live (8s temp proof, reverted to 120s, no trace left)
+- [x] ffmpeg fallback path exists (code-reviewed; SoX healthy so untriggered)
+
+## Gate 3 — Groq transcription 🟡
 
 - [ ] `<leader>v` toggle stub (toast), `/voice` slash, `/voice-lang` stub,
       palette entries
