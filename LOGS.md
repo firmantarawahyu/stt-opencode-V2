@@ -28,7 +28,17 @@ no errors. Merged to `master`._
 
 ## Gate 1 — Hotkey & commands
 
-_Status: open._
+_Status: in-progress (branch `gate-1-hotkey`)._
+
+- Build: `keymap.layer` (global, priority 10) with `stt-voice.toggle`
+  (`bind: "<leader>v"`, palette, slash `/voice` + alias) and
+  `stt-voice.lang` (palette, slash `/voice-lang`); both run stub toasts.
+  `node --check` pass. Hot-reload expected (server watches workspace).
+- Risk flagged: `<leader>v` chord format follows the keybind-config
+  `<leader>` token convention but is unverified for plugin `bind`.
+  Fallback ready: `ctrl+shift+v`.
+- Check (pending user): `<leader>v` → stub toast; `/voice`,
+  `/voice-lang` → stub toasts; palette lists both; no builtin conflicts.
 
 ## Gate 2 — Recorder
 
