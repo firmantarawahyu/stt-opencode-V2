@@ -48,7 +48,18 @@ work; palette lists both, no conflicts. Merged to `master`._
 
 ## Gate 2 — Recorder
 
-_Status: open._
+_Status: in-progress (branch `gate-2-recorder`)._
+
+- Build: `lib/recorder.ts` (SoX primary `sox -d`, ffmpeg DirectShow
+  fallback with device enumeration, graceful stop, 120s auto-stop timer)
+  + toggle state machine in `tui.ts`. `node --check` pass on all files.
+- ffmpeg device enumeration verified live: 2 audio devices present.
+- Check (pending user): `<leader>v` → recording toast; speak ~5s →
+  `<leader>v` → success toast with path + size; machine then validates
+  the WAV via `sox --i` from the shell.
+- Residual risk: ffmpeg fallback path is code-reviewed only (SoX healthy,
+  so fallback won't trigger live); WAV header finalization after kill
+  is covered by the `sox --i` validation step.
 
 ## Gate 3 — Groq transcription
 
