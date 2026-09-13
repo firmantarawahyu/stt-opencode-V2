@@ -19,11 +19,11 @@ Legend: ⬜ open · 🟡 in-progress · 🟩 pass
 - [x] Auto-stop proven live (8s temp proof, reverted to 120s, no trace left)
 - [x] ffmpeg fallback path exists (code-reviewed; SoX healthy so untriggered)
 
-## Gate 3 — Groq transcription 🟡
+## Gate 3 — Groq transcription 🟩
 
-- [ ] Multipart upload, locked model, env-only key
-- [ ] Clean error toasts: missing key, 401, 429, 413
-- [ ] Correct ID + EN transcription with valid key
+- [x] Multipart upload, locked model, env-only key
+- [x] Clean error toasts: missing key, 401, 429, 413 (mock-verified + live)
+- [x] Correct ID + EN transcription with valid key (user-confirmed live)
 
 ## Gate 4 — Output UX ⬜
 

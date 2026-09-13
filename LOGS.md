@@ -84,6 +84,8 @@ _Status: in-progress (branch `gate-3-transcribe`)._
   ok→`halo dunia`. Probe file removed after.
 - Check (pending user, needs real key): record ID + EN samples, confirm
   transcript toasts correct. `language` storage wiring stays in Gate 5.
+_Status: PASS (2026-09-13). Sign-off: user-confirmed live ID + EN
+transcription toasts correct, no errors. Merged to `master`._
 
 ## Gate 4 — Output UX
 
