@@ -136,4 +136,10 @@ after instant-toast fix. Merged to `master`._
 
 ## Gate 6 — E2E & Alpha release
 
-_Status: open._
+_Status: in-progress (branch `gate-6-release`, workspace-only)._
+
+- Machine (PASS): `node --check` on all 5 plugin files; server
+  `opencode.log` has zero ERROR entries since 08:26 UTC (only hits are
+  the grep probes themselves).
+- Build: `README.md` expanded (install, key, usage, troubleshooting).
+- Check (pending user): full flow 1× Indonesian + 1× mixed EN.

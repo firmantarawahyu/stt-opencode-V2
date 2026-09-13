@@ -34,7 +34,7 @@ Legend: ⬜ open · 🟡 in-progress · 🟩 pass
 
 - [x] `/voice-lang` persists via `storage`; survives TUI restart
 
-## Gate 6 — E2E & Alpha release ⬜
+## Gate 6 — E2E & Alpha release 🟡
 
 - [ ] Full flow 1× Indonesian + 1× mixed EN, no log errors
 - [ ] README Alpha (install, key, troubleshooting); tag `Alpha`
