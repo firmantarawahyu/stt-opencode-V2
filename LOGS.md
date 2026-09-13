@@ -134,6 +134,13 @@ after instant-toast fix. Merged to `master`._
   instant `Starting recording [lang X]…` toast on keypress, existing
   `Recording via <tool>` toast confirms after spawn.
 
+# Alpha — CLOSED (2026-09-13)
+
+Gates 0–6 PASS. Tag `Alpha` + `master` on GitHub
+(`firmantarawahyu/stt-opencode-V2`). Docs, LICENSE, global-install
+trial, and post-Alpha fixes all fused. Next work (npm spike, Beta
+scope) starts on new branches when the user says so.
+
 ## Push — GitHub (post-Alpha)
 
 - Remote `origin` → `https://github.com/firmantarawahyu/stt-opencode-V2.git`
