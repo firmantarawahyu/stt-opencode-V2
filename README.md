@@ -13,60 +13,79 @@ and Whisper detects plenty on its own.
 ## Install
 
 A mic, SoX, ffmpeg as backup, OpenCode v2.x, and a Groq key cover the
-requirements. Three routes below.
+requirements. Two needs exist. Daily use pulls the plugin folder
+alone. Code changes need the full repo.
 
-### Route A: workspace
-
-Best for single-repo use. Clone the repo, open the TUI from its root.
-
-1. Clone and enter the repo:
-
-   ```powershell
-   git clone <repo-url>
-   cd STT-Opencode-Plugins
-   ```
-
-2. Launch the TUI:
-
-   ```powershell
-   opencode
-   ```
-
-3. The `Voice plugin loaded` toast means the plugin is live. `/voice`
-   answers, the hotkey works.
-
-Open the TUI from another folder and the plugin stays quiet.
-
-### Route B: global, every folder
-
-One copy serves every folder.
-
-1. Copy `.opencode/plugins/stt-opencode2` from the repo into
-   `~/.config/opencode/plugins/stt-opencode2`. Move the files, not a
-   link. Symlinks never load. The scanner skips them.
-2. Restart the TUI so the service picks up the new folder.
-3. Open the TUI anywhere. The loaded toast confirms.
-
-Delete that folder and restart to undo. Nothing else changes.
-
-### Route C: ask an agent
-
-Hand the block below to an agent. It checks the tools and copies the
-files. No manual steps.
+Repo:
 
 ```text
-Install the stt-opencode2 voice plugin globally on this Windows machine:
-1. Verify sox, ffmpeg, and opencode exist (Get-Command). Report what is
-   missing. Stop when SoX is absent.
-2. Clone <repo-url> to a temp dir, or ask where the repo sits.
-3. Back up ~/.config/opencode/plugins/stt-opencode2 first when it exists.
-   Then copy .opencode/plugins/stt-opencode2 from the repo there.
-   Copy files, no symlinks.
-4. Confirm these 5 files landed: index.ts, tui.ts, lib/recorder.ts,
-   lib/transcribe.ts, lib/clipboard.ts.
-5. Tell the user to restart the TUI, open it from any folder, and look
-   for the "Voice plugin loaded" toast.
-Put no API key in any file. Push and publish nothing.
+https://github.com/firmantarawahyu/stt-opencode-V2.git
+```
+
+Plugin folder inside the repo:
+
+```text
+.opencode/plugins/stt-opencode2
+```
+
+### Use only, no contribute
+
+Sparse checkout fetches that folder and skips the rest.
+
+```powershell
+git clone --filter=blob:none --sparse https://github.com/firmantarawahyu/stt-opencode-V2.git stt-tmp
+cd stt-tmp
+git sparse-checkout set .opencode/plugins/stt-opencode2
+```
+
+The plugin is live after one copy.
+
+For every folder (global):
+
+```powershell
+Copy-Item -Recurse .opencode/plugins/stt-opencode2 $HOME/.config/opencode/plugins/stt-opencode2 -Force
+```
+
+For one repo (workspace): copy that folder into
+`<repo>/.opencode/plugins/stt-opencode2`, then open the TUI from the
+repo root.
+
+Restart the TUI. The `Voice plugin loaded` toast confirms. Delete the
+target folder and restart to undo.
+
+Symlinks never load. The scanner skips them. Copy files.
+
+### Contribute
+
+Full clone keeps docs, specs, and logs beside the code.
+
+```powershell
+git clone https://github.com/firmantarawahyu/stt-opencode-V2.git
+cd stt-opencode-V2
+opencode
+```
+
+### Ask an agent
+
+Paste the block below to an agent. It fetches the plugin folder
+alone and copies the files. No manual steps.
+
+```text
+Install stt-opencode2 globally on this Windows machine.
+
+Repo: https://github.com/firmantarawahyu/stt-opencode-V2.git
+Plugin folder in repo: .opencode/plugins/stt-opencode2
+Target: $HOME/.config/opencode/plugins/stt-opencode2
+
+Steps:
+1. Check sox, ffmpeg, opencode with Get-Command. List what is missing. Stop when SoX is missing.
+2. Sparse-clone the repo to a temp dir, fetching the plugin folder only.
+3. When the target folder exists, back it up with a timestamp suffix.
+4. Copy the plugin folder to the target. Copy files, no symlinks.
+5. Confirm 5 files exist: index.ts, tui.ts, lib/recorder.ts, lib/transcribe.ts, lib/clipboard.ts.
+6. Report done. Ask for a TUI restart plus the "Voice plugin loaded" toast check.
+
+Rules: put no API key in any file. Push and publish nothing.
 ```
 
 ## API key
