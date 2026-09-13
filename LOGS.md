@@ -106,7 +106,33 @@ paste equals dialog, closes cleanly + success toast. Merged to `master`._
 
 ## Gate 5 — Language persistence
 
-_Status: open._
+_Status: in-progress (branch `gate-5-lang`)._
+
+- Build: `context.storage.store("voice-lang", { initial: { lang: "auto" } })`
+  (durable JSON per V2 typings) + getter/setter on `VoiceState`;
+  `transcribe` now uses stored lang; `/voice-lang` opens
+  `dialog.select` (auto/id/en, current pre-selected) → persist → toast;
+  cancel → "unchanged" toast; recording toast shows `[lang X]`.
+- Check (machine, PASS): `node --check` on `tui.ts` + `transcribe.ts`.
+  Storage/dialog host APIs are code-reviewed against
+  `@opencode/plugin@2.0.2` typings (no local host to mock).
+- Check (pending user): pick lang → toast → restart TUI → `/voice-lang`
+  pre-selects previous choice (persistence proof).
+_Status: PASS (2026-09-13). Sign-off: user-confirmed select+toast,
+restart pre-selects `id`, recording toast shows `[lang id]` on keypress
+after instant-toast fix. Merged to `master`._
+- Diagnose (TUI crash on open/session start): sidebar.footer slot claim
+  returning a raw string crashed host render. Reverted immediately
+  (`573580e`); recording toast restored to proven Gate 2 text. Sidebar
+  indicator deferred — needs a safe render pattern, not a bare string.
+- Log check: `opencode.log` shows no server-side error at crash time —
+  plugin loads clean, only repeated `cli starting` (user relaunching)
+  during the sidebar window, then a clean session start after the
+  revert. Crash was renderer-side only (never reaches server log).
+- Diagnose (recording toast "missing"): not missing, delayed —
+  `toggleVoice` awaited SoX spawn before the toast. Fix (`fde6c90`):
+  instant `Starting recording [lang X]…` toast on keypress, existing
+  `Recording via <tool>` toast confirms after spawn.
 
 ## Gate 6 — E2E & Alpha release
 
