@@ -28,7 +28,23 @@ no errors. Merged to `master`._
 
 ## Gate 1 — Hotkey & commands
 
-_Status: open._
+_Status: in-progress (branch `gate-1-hotkey`)._
+
+- Build: `keymap.layer` (global, priority 10) with `stt-voice.toggle`
+  (`bind: "<leader>v"`, palette, slash `/voice` + alias) and
+  `stt-voice.lang` (palette, slash `/voice-lang`); both run stub toasts.
+  `node --check` pass. Hot-reload expected (server watches workspace).
+- Risk flagged: `<leader>v` chord format follows the keybind-config
+  `<leader>` token convention but is unverified for plugin `bind`.
+  Fallback ready: `ctrl+shift+v`.
+- Diagnose (TUI error `Keymap.Provider is missing`): `keymap.layer`
+  consumes a Solid context provider, so it cannot run at `setup` top
+  level. Fix: register the layer from the always-mounted `app` slot
+  render; new imports are type-only (erased at runtime). If the error
+  persists, next suspect is the `bind` format itself.
+_Status: PASS (2026-09-13). Sign-off: no provider error after app-slot
+fix; `<leader>v` fires toggle stub; `/voice` + `/voice-lang` stub toasts
+work; palette lists both, no conflicts. Merged to `master`._
 
 ## Gate 2 — Recorder
 
