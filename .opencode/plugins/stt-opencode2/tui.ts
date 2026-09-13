@@ -3,6 +3,7 @@ import { Plugin } from "@opencode/plugin/tui";
 import type { Context, KeymapLayer } from "@opencode/plugin/tui";
 import type { JSX } from "@opentui/solid";
 import { AUTO_STOP_MS, newOutFile, startRecording, type ActiveRecording } from "./lib/recorder.js";
+import { copyToClipboard } from "./lib/clipboard.js";
 import { transcribe, toHumanError } from "./lib/transcribe.js";
 
 interface VoiceState {
@@ -38,15 +39,24 @@ async function stopActive(
     });
     try {
       const text = await transcribe(rec.file, "auto");
-      const preview = text.length > 220 ? `${text.slice(0, 220)}…` : text;
+      let copied = true;
+      try {
+        await copyToClipboard(text);
+      } catch {
+        copied = false;
+      }
+      context.ui.dialog.set({ size: "large" });
+      await context.ui.dialog.alert({ title: "stt-opencode2", message: text });
       context.ui.toast.show({
         title: "stt-opencode2",
         message:
           reason === "auto"
-            ? `Auto-stop 120s. Transcript (${text.length} chars): ${preview}`
-            : `Transcript (${text.length} chars): ${preview}`,
-        variant: "success",
-        duration: 12000,
+            ? `Auto-stop 120s. ${copied ? `Copied ${text.length} chars to clipboard.` : "Copy failed — retype from the dialog."}`
+            : copied
+              ? `Copied ${text.length} chars to clipboard.`
+              : "Copy failed — retype from the dialog.",
+        variant: copied ? "success" : "warning",
+        duration: 8000,
       });
     } catch (err) {
       context.ui.toast.show({
