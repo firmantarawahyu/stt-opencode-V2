@@ -84,6 +84,14 @@ async function toggleVoice(context: Context, state: VoiceState): Promise<void> {
     return;
   }
   const file = newOutFile();
+  // Instant feedback: startRecording awaits SoX spawn (~1s on waveaudio
+  // init), so announce first, confirm with the tool name after.
+  context.ui.toast.show({
+    title: "stt-opencode2",
+    message: `Starting recording [lang ${state.getLang()}]…`,
+    variant: "info",
+    duration: 3000,
+  });
   try {
     const rec = await startRecording(file);
     state.active = rec;
