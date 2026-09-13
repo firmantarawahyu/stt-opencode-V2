@@ -48,7 +48,26 @@ work; palette lists both, no conflicts. Merged to `master`._
 
 ## Gate 2 — Recorder
 
-_Status: open._
+_Status: PASS (2026-09-13). Sign-off: manual stop + valid WAV + auto-stop
+all proven by execution; ffmpeg fallback code-reviewed only. Merged to
+`master`._
+
+- Build: `lib/recorder.ts` (SoX primary `sox -d`, ffmpeg DirectShow
+  fallback with device enumeration, graceful stop, 120s auto-stop timer)
+  + toggle state machine in `tui.ts`. `node --check` pass on all files.
+- ffmpeg device enumeration verified live: 2 audio devices present.
+- Check (pending user): `<leader>v` → recording toast; speak ~5s →
+  `<leader>v` → success toast with path + size; machine then validates
+  the WAV via `sox --i` from the shell.
+- Residual risk: ffmpeg fallback path is code-reviewed only (SoX healthy,
+  so fallback won't trigger live); WAV header finalization after kill
+  is covered by the `sox --i` validation step.
+- Diagnose (stop failed ENOENT, file never created): reproduced live —
+  `sox -d` fails with "no default audio device configured" on this
+  machine. Probing `waveaudio` indices: 0 and 1 record fine (WAV validated
+  via `sox --i`), 2 absent. Fix: explicit `-t waveaudio 0` (mic picker
+  deferred to Beta per spec) + early-exit detection surfacing recorder
+  stderr instead of a bare ENOENT at stat time.
 
 ## Gate 3 — Groq transcription
 

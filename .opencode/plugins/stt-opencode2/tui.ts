@@ -1,27 +1,95 @@
+import fs from "node:fs";
 import { Plugin } from "@opencode/plugin/tui";
 import type { Context, KeymapLayer } from "@opencode/plugin/tui";
 import type { JSX } from "@opentui/solid";
+import { AUTO_STOP_MS, newOutFile, startRecording, type ActiveRecording } from "./lib/recorder.js";
 
-function voiceLayer(context: Context): KeymapLayer {
+interface VoiceState {
+  active: ActiveRecording | null;
+  timer: ReturnType<typeof setTimeout> | null;
+}
+
+function fmtKB(bytes: number): string {
+  return `${Math.max(1, Math.round(bytes / 1024))} KB`;
+}
+
+async function stopActive(
+  context: Context,
+  state: VoiceState,
+  reason: "manual" | "auto",
+): Promise<void> {
+  const rec = state.active;
+  if (state.timer) {
+    clearTimeout(state.timer);
+    state.timer = null;
+  }
+  state.active = null;
+  if (!rec) return;
+  try {
+    await rec.stop();
+    const stat = fs.statSync(rec.file);
+    const secs = Math.round((Date.now() - rec.startedAt) / 1000);
+    context.ui.toast.show({
+      title: "stt-opencode2",
+      message:
+        reason === "auto"
+          ? `Auto-stop 120s. Saved ${fmtKB(stat.size)} (${secs}s) via ${rec.tool} → ${rec.file}. Transcription lands in Gate 3.`
+          : `Saved ${fmtKB(stat.size)} (${secs}s) via ${rec.tool} → ${rec.file}. Transcription lands in Gate 3.`,
+      variant: "success",
+      duration: 8000,
+    });
+  } catch (err) {
+    context.ui.toast.show({
+      title: "stt-opencode2",
+      message: `Stop failed: ${err instanceof Error ? err.message : String(err)}`,
+      variant: "error",
+      duration: 8000,
+    });
+  }
+}
+
+async function toggleVoice(context: Context, state: VoiceState): Promise<void> {
+  if (state.active) {
+    await stopActive(context, state, "manual");
+    return;
+  }
+  const file = newOutFile();
+  try {
+    const rec = await startRecording(file);
+    state.active = rec;
+    state.timer = setTimeout(() => {
+      void stopActive(context, state, "auto");
+    }, AUTO_STOP_MS);
+    context.ui.toast.show({
+      title: "stt-opencode2",
+      message: `Recording via ${rec.tool}… press <leader>v again to stop (auto-stop 120s).`,
+      variant: "info",
+      duration: 5000,
+    });
+  } catch (err) {
+    context.ui.toast.show({
+      title: "stt-opencode2",
+      message: `Cannot record: ${err instanceof Error ? err.message : String(err)}`,
+      variant: "error",
+      duration: 8000,
+    });
+  }
+}
+
+function voiceLayer(context: Context, state: VoiceState): KeymapLayer {
   return {
     mode: "global",
     priority: 10,
     commands: [
       {
         id: "stt-voice.toggle",
-        title: "Voice: toggle recording (stub)",
-        description: "Start/stop voice recording. Full behavior lands in Gate 2+.",
+        title: "Voice: toggle recording",
+        description: "Start/stop voice recording to a WAV file.",
         group: "Voice",
         bind: "<leader>v",
         palette: true,
         slash: { name: "voice", aliases: ["voice-record"] },
-        run: async () => {
-          context.ui.toast.show({
-            title: "stt-opencode2",
-            message: "Toggle stub: recording starts in Gate 2.",
-            variant: "info",
-          });
-        },
+        run: () => toggleVoice(context, state),
       },
       {
         id: "stt-voice.lang",
@@ -46,6 +114,7 @@ function voiceLayer(context: Context): KeymapLayer {
 export default Plugin.define({
   id: "stt-opencode2",
   setup(context) {
+    const state: VoiceState = { active: null, timer: null };
     context.ui.toast.show({
       title: "stt-opencode2",
       message: "Voice plugin loaded (Gate 0 scaffold).",
@@ -59,7 +128,7 @@ export default Plugin.define({
     context.ui.slot({
       append: "app",
       render: () => {
-        context.keymap.layer(() => voiceLayer(context));
+        context.keymap.layer(() => voiceLayer(context, state));
         return null as unknown as JSX.Element;
       },
     });
