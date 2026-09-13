@@ -8,6 +8,17 @@ Paste manually into the composer (no auto-submit in Alpha, by design).
 
 See `SPECS.md` for scope, `ROADMAP.md` for planning, `TODO.md` for gates.
 
+## Documentation
+
+- `docs/ARCHITECTURE.md` — system design, components, locked decisions.
+- `docs/DEVELOPER_GUIDE.md` — setup, checks, live-test protocol.
+- `docs/CONTRIBUTING.md` — scope lock, PR requirements.
+- `CHANGELOG.md` — release notes per tag.
+
+## License
+
+MIT — see `LICENSE`.
+
 ## Install (workspace-only)
 
 The plugin lives in `.opencode/plugins/stt-opencode2/` of this repo and
