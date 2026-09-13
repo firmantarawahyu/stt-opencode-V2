@@ -23,11 +23,32 @@ export interface ActiveRecording {
   stop(): Promise<void>;
 }
 
-function spawnSox(file: string): Promise<ChildProcess> {
+interface Spawned {
+  proc: ChildProcess;
+  failed: () => Error | null;
+}
+
+function spawnSox(file: string): Promise<Spawned> {
   return new Promise((resolve, reject) => {
-    const proc = spawn("sox", ["-d", file], { windowsHide: true });
+    // NOTE (Windows): `sox -d` fails here with "no default audio device
+    // configured". Explicit waveaudio device 0 works (verified live).
+    // Device selection becomes user-configurable in Beta (mic picker).
+    const proc = spawn("sox", ["-t", "waveaudio", "0", file], { windowsHide: true });
+    let stderr = "";
+    proc.stderr?.on("data", (d: Buffer) => {
+      stderr += d.toString();
+    });
+    let exited: number | null = null;
     proc.once("error", reject);
-    proc.once("spawn", () => resolve(proc));
+    proc.once("spawn", () => resolve({ proc, failed: () => failed() }));
+    proc.once("close", (code) => {
+      exited = code ?? 0;
+    });
+    function failed(): Error | null {
+      if (exited === null || exited === 0) return null;
+      const detail = stderr.trim().split("\n").slice(-2).join(" ").trim();
+      return new Error(`sox exited early (code ${exited})${detail ? `: ${detail}` : ""}`);
+    }
   });
 }
 
@@ -93,17 +114,23 @@ function spawnFfmpeg(file: string): ActiveRecording {
 
 export async function startRecording(file: string): Promise<ActiveRecording> {
   try {
-    const proc = await spawnSox(file);
+    const { proc, failed } = await spawnSox(file);
     let stopped = false;
     return {
       tool: "sox",
       file,
       startedAt: Date.now(),
       stop: () =>
-        new Promise<void>((resolve) => {
+        new Promise<void>((resolve, reject) => {
           if (stopped) return resolve();
           stopped = true;
-          proc.once("close", () => resolve());
+          const early = failed();
+          if (early) return reject(early);
+          proc.once("close", () => {
+            const late = failed();
+            if (late) reject(late);
+            else resolve();
+          });
           proc.kill();
           setTimeout(() => resolve(), 3000);
         }),
