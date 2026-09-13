@@ -192,13 +192,5 @@ export default Plugin.define({
         return null as unknown as JSX.Element;
       },
     });
-
-    // Persistent language indicator: sidebar footer shows the active
-    // transcription language. Reads the store in render so it updates
-    // live when /voice-lang changes it.
-    context.ui.slot({
-      append: "sidebar.footer",
-      render: () => `voice: ${state.getLang()}` as unknown as JSX.Element,
-    });
   },
 });
