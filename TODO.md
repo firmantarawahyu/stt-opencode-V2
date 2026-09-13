@@ -2,12 +2,11 @@
 
 Legend: ⬜ open · 🟡 in-progress · 🟩 pass
 
-## Gate 0 — Scaffold & load ⬜
+## Gate 0 — Scaffold & load 🟩
 
-- [ ] `package.json` (exports `./tui`, dep `@opencode/plugin`), `src/tui.ts`
-      minimal (setup toast), registered in global `cli.json` by local path
-- [ ] `plugin check` clean
-- [ ] TUI opens with no module error; setup toast visible
+- [x] Canonical `.opencode/plugins/stt-opencode2/` (`index.ts`, `tui.ts`)
+- [x] Server log `loading plugin` clean; API → `('stt-opencode2-server', 'active')`
+- [x] TUI opens with no module error; setup toast visible (user-confirmed)
 
 ## Gate 1 — Hotkey & commands ⬜
 
