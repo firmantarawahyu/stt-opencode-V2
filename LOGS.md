@@ -5,7 +5,8 @@
 
 ## Gate 0 — Scaffold & load
 
-_Status: in-progress (branch `gate-0-scaffold`). Server side PASS._
+_Status: PASS (2026-09-13). Sign-off: server `active` + TUI toast visible,
+no errors. Merged to `master`._
 
 - Build: canonical source is now ONLY `.opencode/plugins/stt-opencode2/`
   (`index.ts` server stub plain-object, `tui.ts` V2 `Plugin.define` + setup
