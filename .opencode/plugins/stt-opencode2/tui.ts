@@ -100,7 +100,7 @@ async function toggleVoice(context: Context, state: VoiceState): Promise<void> {
     }, AUTO_STOP_MS);
     context.ui.toast.show({
       title: "stt-opencode2",
-      message: `Recording via ${rec.tool} [lang ${state.getLang()}]… press <leader>v again to stop (auto-stop 120s).`,
+      message: `Recording via ${rec.tool} [lang ${state.getLang()}]… press ctrl+x v again to stop (auto-stop 120s).`,
       variant: "info",
       duration: 5000,
     });

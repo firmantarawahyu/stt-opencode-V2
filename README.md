@@ -99,7 +99,7 @@ transcript.
 
 ## Usage
 
-- `<leader>v` (`ctrl+x`, then `V`) starts recording. Press again to
+- `ctrl+x v` (`ctrl+x`, then `V`) starts recording. Press again to
   stop. Recording stops by itself at 120 seconds.
 - `/voice` toggles the same way through the slash menu or palette.
 - `/voice-lang` picks `auto`, `id`, or `en`. The choice survives TUI

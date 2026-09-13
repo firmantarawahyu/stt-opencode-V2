@@ -39,7 +39,7 @@ The whole flow plus all UI lives here.
   and the language getter/setter.
 - Registration of `keymap.layer` happens from the always-mounted `app`
   slot render. Top-level `setup` calls throw `Keymap.Provider is missing`.
-- Two commands ship: `stt-voice.toggle` (`<leader>v`, `/voice`) and
+- Two commands ship: `stt-voice.toggle` (`ctrl+x v`, `/voice`) and
   `stt-voice.lang` (`/voice-lang` opens a select dialog and persists
   the pick).
 - Output opens a large `dialog.alert`, then a success toast, or a
@@ -81,11 +81,11 @@ Unicode but may normalize line endings, so it stays second choice.
 
 ## Data Flow
 
-1. The first `<leader>v` brings an instant `Starting recording
+1. The first `ctrl+x v` brings an instant `Starting recording
    [lang X]…` toast.
 2. SoX spawns, the `Recording via sox…` toast follows, the mic writes
    a WAV to `%LOCALAPPDATA%\Temp\opencode\stt-opencode2\`.
-3. A second `<leader>v`, or the 120s timer, ends capture. The
+3. A second `ctrl+x v`, or the 120s timer, ends capture. The
    `Recorded …, Transcribing via Groq…` toast follows.
 4. Transcription runs in the stored language, the text hits the
    clipboard, the result dialog opens. Confirmation brings a success

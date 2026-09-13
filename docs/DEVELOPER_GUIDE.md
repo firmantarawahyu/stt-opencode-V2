@@ -78,7 +78,7 @@ Ship only on `MATCH`. Exact bytes, no trailing newline.
 
 These need a mic and a key.
 
-- Record and stop: `<leader>v`, five seconds of speech, `<leader>v`
+- Record and stop: `ctrl+x v`, five seconds of speech, `ctrl+x v`
   again. Dialog text matches the paste, the dialog closes without
   errors, the success toast follows.
 - Language: `/voice-lang`, pick a language, read the toast. Restart
