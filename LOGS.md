@@ -136,6 +136,11 @@ after instant-toast fix. Merged to `master`._
 
 ## Fix — setup toast (post-Alpha)
 
+- Terminology: `ctrl+x v` replaces `<leader>v` in all prose (toasts,
+  README, docs, SPECS, CHANGELOG, AGENTS) per user request
+  (`7bfc9e7`, fused `f947ae8`). The functional `bind: "<leader>v"`
+  stays untouched, as do gate history lines in LOGS/TODO.
+
 - Follow-up: label changed to plain `ctrl+x v` per user request
   (`f021090`, fused `e93ae49`); global copy refreshed and verified
   (earlier miss was regex `+` in the probe, not the copy).
