@@ -71,7 +71,21 @@ all proven by execution; ffmpeg fallback code-reviewed only. Merged to
 
 ## Gate 3 — Groq transcription
 
-_Status: open._
+_Status: in-progress (branch `gate-3-transcribe`)._
+
+- Build: `lib/transcribe.ts` (endpoint + locked `whisper-large-v3-turbo`,
+  key from `GROQ_API_KEY` env only, `language` param ready default `auto`,
+  FormData upload, error map 401/429/413 + missing-key + generic) wired
+  into `tui.ts` stop flow (recording → transcribing toast → transcript
+  preview toast or human-readable error toast).
+- Check (machine, PASS): `node --check` on all 3 files; mocked-fetch run
+  via `node --experimental-strip-types` verified all 6 paths:
+  missing-key, 401→auth, 429→rate-limit, 413→too-large, 500→request,
+  ok→`halo dunia`. Probe file removed after.
+- Check (pending user, needs real key): record ID + EN samples, confirm
+  transcript toasts correct. `language` storage wiring stays in Gate 5.
+_Status: PASS (2026-09-13). Sign-off: user-confirmed live ID + EN
+transcription toasts correct, no errors. Merged to `master`._
 
 ## Gate 4 — Output UX
 
