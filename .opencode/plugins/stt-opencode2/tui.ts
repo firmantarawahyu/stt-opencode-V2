@@ -3,6 +3,7 @@ import { Plugin } from "@opencode/plugin/tui";
 import type { Context, KeymapLayer } from "@opencode/plugin/tui";
 import type { JSX } from "@opentui/solid";
 import { AUTO_STOP_MS, newOutFile, startRecording, type ActiveRecording } from "./lib/recorder.js";
+import { transcribe, toHumanError } from "./lib/transcribe.js";
 
 interface VoiceState {
   active: ActiveRecording | null;
@@ -31,13 +32,30 @@ async function stopActive(
     const secs = Math.round((Date.now() - rec.startedAt) / 1000);
     context.ui.toast.show({
       title: "stt-opencode2",
-      message:
-        reason === "auto"
-          ? `Auto-stop 120s. Saved ${fmtKB(stat.size)} (${secs}s) via ${rec.tool} → ${rec.file}. Transcription lands in Gate 3.`
-          : `Saved ${fmtKB(stat.size)} (${secs}s) via ${rec.tool} → ${rec.file}. Transcription lands in Gate 3.`,
-      variant: "success",
-      duration: 8000,
+      message: `Recorded ${fmtKB(stat.size)} (${secs}s). Transcribing via Groq…`,
+      variant: "info",
+      duration: 5000,
     });
+    try {
+      const text = await transcribe(rec.file, "auto");
+      const preview = text.length > 220 ? `${text.slice(0, 220)}…` : text;
+      context.ui.toast.show({
+        title: "stt-opencode2",
+        message:
+          reason === "auto"
+            ? `Auto-stop 120s. Transcript (${text.length} chars): ${preview}`
+            : `Transcript (${text.length} chars): ${preview}`,
+        variant: "success",
+        duration: 12000,
+      });
+    } catch (err) {
+      context.ui.toast.show({
+        title: "stt-opencode2",
+        message: toHumanError(err),
+        variant: "error",
+        duration: 10000,
+      });
+    }
   } catch (err) {
     context.ui.toast.show({
       title: "stt-opencode2",

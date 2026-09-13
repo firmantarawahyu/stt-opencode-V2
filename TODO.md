@@ -21,19 +21,7 @@ Legend: ⬜ open · 🟡 in-progress · 🟩 pass
 
 ## Gate 3 — Groq transcription 🟡
 
-- [ ] `<leader>v` toggle stub (toast), `/voice` slash, `/voice-lang` stub,
-      palette entries
-- [ ] Shortcuts listed, dispatch works, no conflict with built-ins
-
-## Gate 2 — Recorder ⬜
-
-- [ ] SoX records to valid WAV in approved temp dir; manual stop works
-- [ ] Auto-stop at 120s; ffmpeg fallback path exists
-- [ ] WAV verified playable / correct duration
-
-## Gate 3 — Groq transcription ⬜
-
-- [ ] Multipart upload, locked model, `language` from storage, env-only key
+- [ ] Multipart upload, locked model, env-only key
 - [ ] Clean error toasts: missing key, 401, 429, 413
 - [ ] Correct ID + EN transcription with valid key
 
