@@ -30,7 +30,7 @@ Legend: ⬜ open · 🟡 in-progress · 🟩 pass
 - [x] Result dialog renders text; clipboard content equals dialog text
 - [x] Success toast; dialog closes cleanly
 
-## Gate 5 — Language persistence ⬜
+## Gate 5 — Language persistence 🟡
 
 - [ ] `/voice-lang` persists via `storage`; survives TUI restart
 

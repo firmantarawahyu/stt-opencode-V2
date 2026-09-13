@@ -4,11 +4,13 @@ import type { Context, KeymapLayer } from "@opencode/plugin/tui";
 import type { JSX } from "@opentui/solid";
 import { AUTO_STOP_MS, newOutFile, startRecording, type ActiveRecording } from "./lib/recorder.js";
 import { copyToClipboard } from "./lib/clipboard.js";
-import { transcribe, toHumanError } from "./lib/transcribe.js";
+import { transcribe, toHumanError, type VoiceLang } from "./lib/transcribe.js";
 
 interface VoiceState {
   active: ActiveRecording | null;
   timer: ReturnType<typeof setTimeout> | null;
+  getLang: () => VoiceLang;
+  setLang: (lang: VoiceLang) => Promise<void>;
 }
 
 function fmtKB(bytes: number): string {
@@ -38,7 +40,7 @@ async function stopActive(
       duration: 5000,
     });
     try {
-      const text = await transcribe(rec.file, "auto");
+      const text = await transcribe(rec.file, state.getLang());
       let copied = true;
       try {
         await copyToClipboard(text);
@@ -90,7 +92,7 @@ async function toggleVoice(context: Context, state: VoiceState): Promise<void> {
     }, AUTO_STOP_MS);
     context.ui.toast.show({
       title: "stt-opencode2",
-      message: `Recording via ${rec.tool}… press <leader>v again to stop (auto-stop 120s).`,
+      message: `Recording via ${rec.tool} [lang ${state.getLang()}]… press <leader>v again to stop (auto-stop 120s).`,
       variant: "info",
       duration: 5000,
     });
@@ -121,16 +123,35 @@ function voiceLayer(context: Context, state: VoiceState): KeymapLayer {
       },
       {
         id: "stt-voice.lang",
-        title: "Voice: language (stub)",
-        description: "Switch transcription language. Wired to storage in Gate 5.",
+        title: "Voice: language",
+        description: "Switch transcription language (auto/id/en), persisted.",
         group: "Voice",
         palette: true,
         slash: { name: "voice-lang" },
         run: async () => {
+          const current = state.getLang();
+          const picked = await context.ui.dialog.select({
+            title: "Voice language",
+            options: [
+              { title: "auto (detect)", value: "auto" as VoiceLang },
+              { title: "id — Indonesian", value: "id" as VoiceLang },
+              { title: "en — English", value: "en" as VoiceLang },
+            ],
+            current,
+          });
+          if (picked === undefined) {
+            context.ui.toast.show({
+              title: "stt-opencode2",
+              message: `Language unchanged: ${current}.`,
+              variant: "info",
+            });
+            return;
+          }
+          await state.setLang(picked);
           context.ui.toast.show({
             title: "stt-opencode2",
-            message: "Language stub: auto (switchable in Gate 5).",
-            variant: "info",
+            message: `Language: ${picked}.`,
+            variant: "success",
           });
         },
       },
@@ -142,7 +163,18 @@ function voiceLayer(context: Context, state: VoiceState): KeymapLayer {
 export default Plugin.define({
   id: "stt-opencode2",
   setup(context) {
-    const state: VoiceState = { active: null, timer: null };
+    const [langStore, updateLang] = context.storage.store("voice-lang", {
+      initial: { lang: "auto" as VoiceLang },
+    });
+    const state: VoiceState = {
+      active: null,
+      timer: null,
+      getLang: () => langStore.lang,
+      setLang: (lang) =>
+        updateLang((draft) => {
+          draft.lang = lang;
+        }),
+    };
     context.ui.toast.show({
       title: "stt-opencode2",
       message: "Voice plugin loaded (Gate 0 scaffold).",
