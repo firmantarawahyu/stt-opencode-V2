@@ -37,6 +37,11 @@ _Status: in-progress (branch `gate-1-hotkey`)._
 - Risk flagged: `<leader>v` chord format follows the keybind-config
   `<leader>` token convention but is unverified for plugin `bind`.
   Fallback ready: `ctrl+shift+v`.
+- Diagnose (TUI error `Keymap.Provider is missing`): `keymap.layer`
+  consumes a Solid context provider, so it cannot run at `setup` top
+  level. Fix: register the layer from the always-mounted `app` slot
+  render; new imports are type-only (erased at runtime). If the error
+  persists, next suspect is the `bind` format itself.
 - Check (pending user): `<leader>v` → stub toast; `/voice`,
   `/voice-lang` → stub toasts; palette lists both; no builtin conflicts.
 
