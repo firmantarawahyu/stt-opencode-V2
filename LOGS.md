@@ -126,6 +126,10 @@ _Status: in-progress (branch `gate-5-lang`)._
   plugin loads clean, only repeated `cli starting` (user relaunching)
   during the sidebar window, then a clean session start after the
   revert. Crash was renderer-side only (never reaches server log).
+- Diagnose (recording toast "missing"): not missing, delayed —
+  `toggleVoice` awaited SoX spawn before the toast. Fix (`fde6c90`):
+  instant `Starting recording [lang X]…` toast on keypress, existing
+  `Recording via <tool>` toast confirms after spawn.
 
 ## Gate 6 — E2E & Alpha release
 
