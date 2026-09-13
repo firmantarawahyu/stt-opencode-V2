@@ -134,6 +134,14 @@ after instant-toast fix. Merged to `master`._
   instant `Starting recording [lang X]…` toast on keypress, existing
   `Recording via <tool>` toast confirms after spawn.
 
+## Push — GitHub (post-Alpha)
+
+- Remote `origin` → `https://github.com/firmantarawahyu/stt-opencode-V2.git`
+  (empty repo, no README/license/gitignore presets to avoid conflicts).
+- Pushed explicitly `master` + tag `Alpha` only; verified server-side
+  (`HEAD`/`master` at fuse tip, `refs/tags/Alpha` at Gate 6 fuse).
+  Note: post-Alpha fix commits ride on `master` after the tag.
+
 ## Fix — setup toast (post-Alpha)
 
 - Terminology: `ctrl+x v` replaces `<leader>v` in all prose (toasts,
