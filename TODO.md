@@ -8,7 +8,12 @@ Legend: ⬜ open · 🟡 in-progress · 🟩 pass
 - [x] Server log `loading plugin` clean; API → `('stt-opencode2-server', 'active')`
 - [x] TUI opens with no module error; setup toast visible (user-confirmed)
 
-## Gate 1 — Hotkey & commands 🟡
+## Gate 1 — Hotkey & commands 🟩
+
+- [x] `<leader>v` toggle stub (toast), `/voice` + `/voice-lang` stubs, palette entries
+- [x] No provider error (app-slot fix); user-confirmed, no builtin conflicts
+
+## Gate 2 — Recorder 🟡
 
 - [ ] `<leader>v` toggle stub (toast), `/voice` slash, `/voice-lang` stub,
       palette entries

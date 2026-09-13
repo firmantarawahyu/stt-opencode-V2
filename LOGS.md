@@ -42,8 +42,9 @@ _Status: in-progress (branch `gate-1-hotkey`)._
   level. Fix: register the layer from the always-mounted `app` slot
   render; new imports are type-only (erased at runtime). If the error
   persists, next suspect is the `bind` format itself.
-- Check (pending user): `<leader>v` → stub toast; `/voice`,
-  `/voice-lang` → stub toasts; palette lists both; no builtin conflicts.
+_Status: PASS (2026-09-13). Sign-off: no provider error after app-slot
+fix; `<leader>v` fires toggle stub; `/voice` + `/voice-lang` stub toasts
+work; palette lists both, no conflicts. Merged to `master`._
 
 ## Gate 2 — Recorder
 
