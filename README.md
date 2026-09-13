@@ -13,9 +13,13 @@ own, so `auto` follows you without setup.
 
 ## Install
 
-What you need is a mic, SoX, ffmpeg as backup, and OpenCode v2.x.
-The plugin ships inside this repo, so you clone it and open the TUI
-from the repo root.
+You need a mic, SoX, ffmpeg as backup, OpenCode v2.x, and a Groq key
+(see below). Pick one route.
+
+### Route A: workspace
+
+You use the plugin in one repo. Clone it and open the TUI from the
+repo root.
 
 1. Clone and enter the repo:
 
@@ -33,10 +37,42 @@ from the repo root.
 3. Look for the `Voice plugin loaded` toast. You see it, the plugin
    is live. You run `/voice` and get an answer, your hotkey works.
 
-The plugin loads per folder. You open the TUI from another folder and
-it stays unloaded. Alpha stays workspace-only on purpose. Do not
-symlink it into `~/.config/opencode/plugins`. The scanner skips
-symlinked folders, so a symlink buys you nothing.
+You open the TUI from another folder and the plugin stays unloaded.
+
+### Route B: global, every folder
+
+One copy covers every folder.
+
+1. Copy `.opencode/plugins/stt-opencode2` from the repo to
+   `~/.config/opencode/plugins/stt-opencode2` on your machine. Copy
+   the files, not a link. The scanner skips symlinked folders, so a
+   symlink buys you nothing.
+2. Restart the TUI. The service discovers new plugin folders on boot.
+3. Open the TUI from any folder. `Voice plugin loaded` means you are
+   live everywhere.
+
+Undo: delete that folder and restart the TUI. You return to the exact
+prior state.
+
+### Route C: ask your agent
+
+You paste the block below to your agent. It checks the tools and
+copies the files for you. You touch nothing by hand.
+
+```text
+Install the stt-opencode2 voice plugin globally on this Windows machine:
+1. Verify sox, ffmpeg, and opencode exist (Get-Command). Report what is
+   missing. Stop when SoX is absent.
+2. Clone <repo-url> to a temp dir, or ask me where the repo sits.
+3. Back up ~/.config/opencode/plugins/stt-opencode2 first when it exists.
+   Then copy .opencode/plugins/stt-opencode2 from the repo there.
+   Copy files, no symlinks.
+4. Confirm these 5 files landed: index.ts, tui.ts, lib/recorder.ts,
+   lib/transcribe.ts, lib/clipboard.ts.
+5. Tell me to restart the TUI, open it from any folder, and look for
+   the "Voice plugin loaded" toast.
+Put no API key in any file. Push and publish nothing.
+```
 
 ## API key
 
