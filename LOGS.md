@@ -143,3 +143,6 @@ _Status: in-progress (branch `gate-6-release`, workspace-only)._
   the grep probes themselves).
 - Build: `README.md` expanded (install, key, usage, troubleshooting).
 - Check (pending user): full flow 1× Indonesian + 1× mixed EN.
+_Status: PASS (2026-09-13). Sign-off: user-confirmed ID-only, EN-only,
+and auto mixed ID-EN all correct end-to-end (dialog+clipboard+toast).
+Tagged `Alpha`, merged to `master`._
