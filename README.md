@@ -1,6 +1,6 @@
 # stt-opencode2 (Alpha)
 
-Speech-to-text for the OpenCode TUI on Windows.
+Speech-to-text for the OpenCode V2 TUI on Windows.
 
 One hotkey starts recording, the same hotkey stops it. The transcript
 pops in a dialog and lands in the clipboard. Paste it into the
