@@ -136,6 +136,10 @@ after instant-toast fix. Merged to `master`._
 
 ## Fix — setup toast (post-Alpha)
 
+- Follow-up: label changed to plain `ctrl+x v` per user request
+  (`f021090`, fused `e93ae49`); global copy refreshed and verified
+  (earlier miss was regex `+` in the probe, not the copy).
+
 - User spotted the stale Gate 0 label in the load toast. New text:
   `Voice plugin loaded [lang X]. <leader>v toggles recording.`
   (`b06572f`, fused `e412922`).
