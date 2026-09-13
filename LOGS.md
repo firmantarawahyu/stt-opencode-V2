@@ -118,6 +118,9 @@ _Status: in-progress (branch `gate-5-lang`)._
   `@opencode/plugin@2.0.2` typings (no local host to mock).
 - Check (pending user): pick lang → toast → restart TUI → `/voice-lang`
   pre-selects previous choice (persistence proof).
+_Status: PASS (2026-09-13). Sign-off: user-confirmed select+toast,
+restart pre-selects `id`, recording toast shows `[lang id]` on keypress
+after instant-toast fix. Merged to `master`._
 - Diagnose (TUI crash on open/session start): sidebar.footer slot claim
   returning a raw string crashed host render. Reverted immediately
   (`573580e`); recording toast restored to proven Gate 2 text. Sidebar
