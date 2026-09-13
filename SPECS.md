@@ -16,7 +16,7 @@
 
 ## Core function (the only one)
 
-- Toggle recording via leader-chord `<leader>v`, plus `/voice` slash command
+- Toggle recording via `ctrl+x v` (bind `<leader>v`), plus `/voice` slash command
   and command-palette entry.
 - First press: start recording. Second press: stop → transcribe → show result
   in a dialog + auto-copy to clipboard.

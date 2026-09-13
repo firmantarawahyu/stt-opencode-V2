@@ -46,7 +46,7 @@
   composer-insert API (`@opencode/plugin@2.0.2` + `@opencode/client@2.0.2`
   typings verified; `tui.prompt.append` event type exists but has no
   publish path).
-- Toggle hotkey is leader-chord `<leader>v` (`ctrl+x` then `V`).
+- Toggle hotkey is `ctrl+x v` (leader-chord, bind `<leader>v`).
 - Auto-stop recordings at 120s (Groq free-tier 25MB file cap).
 - Recorder priority: SoX first, ffmpeg fallback (both present on this machine).
 - Default language `auto`, switchable at runtime via `/voice-lang`,
