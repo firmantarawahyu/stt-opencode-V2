@@ -134,6 +134,16 @@ after instant-toast fix. Merged to `master`._
   instant `Starting recording [lang X]…` toast on keypress, existing
   `Recording via <tool>` toast confirms after spawn.
 
+## Fix — setup toast (post-Alpha)
+
+- User spotted the stale Gate 0 label in the load toast. New text:
+  `Voice plugin loaded [lang X]. <leader>v toggles recording.`
+  (`b06572f`, fused `e412922`).
+- Global copy refreshed (`tui.ts` only) and verified by content
+  (equal length + new string present; note: `Get-FileHash` is
+  unavailable in this shell, and its absence yields a false
+  `IN-SYNC` — always verify by content instead).
+
 ## Global install trial (post-Alpha, workspace stays canonical)
 
 - Action: physical copy (NOT symlink — scanner skips those) of the 5
