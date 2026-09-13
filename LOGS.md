@@ -89,7 +89,18 @@ transcription toasts correct, no errors. Merged to `master`._
 
 ## Gate 4 — Output UX
 
-_Status: open._
+_Status: in-progress (branch `gate-4-output`)._
+
+- Build: `lib/clipboard.ts` (clip.exe primary exact-bytes, powershell
+  Set-Clipboard fallback) + `tui.ts` stop flow now copy → `dialog.alert`
+  (large) → success/warning toast, replacing transcript-preview toast.
+  V2 API from `@opencode/plugin@2.0.2` typings: `ui.dialog.alert/set`,
+  `ui.toast.show`; no clipboard in TUI API so Node-side copy.
+- Check (machine, PASS): `node --check` on all 4 files; clipboard
+  round-trip via strip-types import: copy probe 30 chars → Get-Clipboard
+  `MATCH` exact, no trailing newline.
+- Check (pending user): record short sample → dialog shows full text →
+  paste clipboard equals dialog text → confirm closes + success toast.
 
 ## Gate 5 — Language persistence
 
