@@ -134,6 +134,23 @@ after instant-toast fix. Merged to `master`._
   instant `Starting recording [lang X]…` toast on keypress, existing
   `Recording via <tool>` toast confirms after spawn.
 
+## Global install trial (post-Alpha, workspace stays canonical)
+
+- Action: physical copy (NOT symlink — scanner skips those) of the 5
+  plugin files to `C:\Users\wahyu\.config\opencode\plugins\stt-opencode2\`
+  (`index.ts`, `tui.ts`, `lib/clipboard.ts`, `lib/recorder.ts`,
+  `lib/transcribe.ts`). Target dir was absent before, so no backup
+  was needed. Repo untouched.
+- Machine: server has NOT discovered it yet — default-location
+  `/api/plugin` from home lists 84 entries, zero `*stt*`; no
+  `loading plugin` line for the global path in `opencode.log`.
+  Discovery needs a service/TUI restart.
+- Revert (if the trial errors): run
+  `Remove-Item -Recurse C:\Users\wahyu\.config\opencode\plugins\stt-opencode2`
+  then restart the TUI. That restores the exact pre-trial state.
+- Check (pending user): open TUI from another directory (e.g. home),
+  expect `Voice plugin loaded` toast + working `/voice` there.
+
 ## Gate 6 — E2E & Alpha release
 
 _Status: in-progress (branch `gate-6-release`, workspace-only)._
