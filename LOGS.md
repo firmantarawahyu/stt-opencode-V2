@@ -118,6 +118,10 @@ _Status: in-progress (branch `gate-5-lang`)._
   `@opencode/plugin@2.0.2` typings (no local host to mock).
 - Check (pending user): pick lang → toast → restart TUI → `/voice-lang`
   pre-selects previous choice (persistence proof).
+- Diagnose (TUI crash on open/session start): sidebar.footer slot claim
+  returning a raw string crashed host render. Reverted immediately
+  (`573580e`); recording toast restored to proven Gate 2 text. Sidebar
+  indicator deferred — needs a safe render pattern, not a bare string.
 
 ## Gate 6 — E2E & Alpha release
 
