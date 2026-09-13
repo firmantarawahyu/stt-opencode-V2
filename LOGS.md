@@ -101,6 +101,8 @@ _Status: in-progress (branch `gate-4-output`)._
   `MATCH` exact, no trailing newline.
 - Check (pending user): record short sample → dialog shows full text →
   paste clipboard equals dialog text → confirm closes + success toast.
+_Status: PASS (2026-09-13). Sign-off: user-confirmed dialog text correct,
+paste equals dialog, closes cleanly + success toast. Merged to `master`._
 
 ## Gate 5 — Language persistence
 

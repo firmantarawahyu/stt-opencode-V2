@@ -25,10 +25,10 @@ Legend: ⬜ open · 🟡 in-progress · 🟩 pass
 - [x] Clean error toasts: missing key, 401, 429, 413 (mock-verified + live)
 - [x] Correct ID + EN transcription with valid key (user-confirmed live)
 
-## Gate 4 — Output UX 🟡
+## Gate 4 — Output UX 🟩
 
-- [ ] Result dialog renders text; clipboard content equals dialog text
-- [ ] Success toast; dialog closes cleanly
+- [x] Result dialog renders text; clipboard content equals dialog text
+- [x] Success toast; dialog closes cleanly
 
 ## Gate 5 — Language persistence ⬜
 
