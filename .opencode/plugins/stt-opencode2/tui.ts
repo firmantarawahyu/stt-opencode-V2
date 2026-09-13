@@ -185,7 +185,7 @@ export default Plugin.define({
     };
     context.ui.toast.show({
       title: "stt-opencode2",
-      message: `Voice plugin loaded [lang ${state.getLang()}]. <leader>v toggles recording.`,
+      message: `Voice plugin loaded [lang ${state.getLang()}]. ctrl+x v toggles recording.`,
       variant: "success",
       duration: 8000,
     });
