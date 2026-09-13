@@ -92,7 +92,7 @@ async function toggleVoice(context: Context, state: VoiceState): Promise<void> {
     }, AUTO_STOP_MS);
     context.ui.toast.show({
       title: "stt-opencode2",
-      message: `Recording via ${rec.tool} [lang ${state.getLang()}]… press <leader>v again to stop (auto-stop 120s).`,
+      message: `Recording via ${rec.tool}… press <leader>v again to stop (auto-stop 120s).`,
       variant: "info",
       duration: 5000,
     });
@@ -191,6 +191,14 @@ export default Plugin.define({
         context.keymap.layer(() => voiceLayer(context, state));
         return null as unknown as JSX.Element;
       },
+    });
+
+    // Persistent language indicator: sidebar footer shows the active
+    // transcription language. Reads the store in render so it updates
+    // live when /voice-lang changes it.
+    context.ui.slot({
+      append: "sidebar.footer",
+      render: () => `voice: ${state.getLang()}` as unknown as JSX.Element,
     });
   },
 });
