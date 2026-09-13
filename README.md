@@ -6,6 +6,11 @@ Press a hotkey to record, press it again to transcribe. The text
 lands in a dialog and in your clipboard. Paste it into the
 composer yourself and send everything yourself.
 
+The menu ships three languages: `auto`, Indonesian (`id`), English
+(`en`). The plugin tunes for those two specifically. You speak
+another language, pick `auto`. Whisper detects many languages on its
+own, so `auto` follows you without setup.
+
 ## Install
 
 What you need is a mic, SoX, ffmpeg as backup, and OpenCode v2.x.
@@ -74,17 +79,11 @@ the full text pops in a dialog (sitting in your clipboard),
 you confirm, you get a success toast with the char count. You then
 paste where you want it.
 
-### Languages
+### Other languages
 
-The menu ships three choices: `auto`, `id`, `en`. The plugin tunes
-for Indonesian and English specifically.
-
-You speak another language, pick `auto`. Whisper detects many
-languages on its own, so `auto` follows you without setup. You need
-to force a specific third language today, the code holds no slot for
-it. You add its ISO code to `VoiceLang` and the dialog options in
-`tui.ts`, or you wait for Beta to widen the list. Until then, `auto`
-covers you.
+You force a specific third language, you add its ISO code to
+`VoiceLang` and the dialog options in `tui.ts`. That extension waits
+for Beta. Until then, `auto` covers you.
 
 ## Troubleshooting
 
