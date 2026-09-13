@@ -122,6 +122,10 @@ _Status: in-progress (branch `gate-5-lang`)._
   returning a raw string crashed host render. Reverted immediately
   (`573580e`); recording toast restored to proven Gate 2 text. Sidebar
   indicator deferred — needs a safe render pattern, not a bare string.
+- Log check: `opencode.log` shows no server-side error at crash time —
+  plugin loads clean, only repeated `cli starting` (user relaunching)
+  during the sidebar window, then a clean session start after the
+  revert. Crash was renderer-side only (never reaches server log).
 
 ## Gate 6 — E2E & Alpha release
 
